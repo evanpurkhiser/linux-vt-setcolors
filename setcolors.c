@@ -20,7 +20,7 @@ struct palette { unsigned char colors[NUM_COLORS * 16]; };
  * Convert a list of colors in hex format to their actual hex formats suitable
  * for passing to the ioctl function
  */
-struct palette
+static struct palette
 get_palette_from_hex_set(const char *colors[])
 {
 	struct palette palette;
@@ -40,8 +40,8 @@ get_palette_from_hex_set(const char *colors[])
 	return palette;
 }
 
-
-void print_colors(unsigned char colors[])
+static void
+print_colors(unsigned char colors[])
 {
 	unsigned char red;
 	unsigned char green;
