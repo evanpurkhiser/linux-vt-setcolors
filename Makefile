@@ -1,2 +1,2 @@
 make:
-	gcc setcolors.c -o setcolors
+	gcc -Wall setcolors.c -o setcolors
