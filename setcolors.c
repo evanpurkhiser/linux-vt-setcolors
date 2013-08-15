@@ -45,10 +45,10 @@ int main(int argc, char *argv[])
 	struct palette new_colors = get_palette_from_hex_set(default_palette);
 
 	int fd = open("/dev/console", O_NOCTTY);
-	int stat = ioctl(fd, PIO_CMAP, &new_colors);
+
+	if (ioctl(fd, PIO_CMAP, &new_colors) < 0)
+		perror("Failed to set new color map on console");
+
 	close(fd);
-
-	printf("status: %d == %d == %d\n", stat, errno, EFAULT);
-
 	return 0;
 }
