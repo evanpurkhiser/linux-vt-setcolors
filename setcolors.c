@@ -9,6 +9,30 @@
 
 struct palette { unsigned char colors[48]; };
 
+/**
+ * Convert a list of colors in hex format to their actual hex formats suitable
+ * for passing to the ioctl function
+ */
+struct palette
+get_palette_from_hex_set(const char *colors[])
+{
+	struct palette palette;
+	unsigned int red, green, blue;
+	int i, k;
+
+	for (i = k = 0; i < 16; ++i)
+	{
+		sscanf(colors[i], "%2x%2x%2x", &red, &green, &blue);
+
+		palette.colors[k++] = red;
+		palette.colors[k++] = green;
+		palette.colors[k++] = blue;
+	}
+
+	return palette;
+}
+
+
 void print_colors(unsigned char colors[])
 {
 	unsigned char red;
