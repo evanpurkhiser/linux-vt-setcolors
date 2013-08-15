@@ -9,7 +9,7 @@
 
 #define NUM_COLORS 16
 
-const char default_colrs[16][6] = {
+static const char *default_palette[16] = {
 "000000","aa0000","00aa00","aa5500","0000aa",
 "aa00aa","00aaaa","aaaaaa","555555","ff5555",
 "55ff55","ffff55","5555ff","ff55ff","55ffff","ffffff" };
