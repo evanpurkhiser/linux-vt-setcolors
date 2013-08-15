@@ -60,19 +60,7 @@ print_colors(unsigned char colors[])
 
 int main(int argc, char *argv[])
 {
-	const char *colors = "000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
-
-	struct colors new_colors;
-
-	unsigned char *dst = new_colors.values;
-	unsigned char *end = new_colors.values + sizeof(new_colors.values);
-	unsigned int u;
-
-	while (dst < end && sscanf(colors, "%2x", &u) == 1)
-	{
-		*dst++ = u;
-		colors += 2;
-	}
+	struct palette new_colors = get_palette_from_hex_set(default_palette);
 
 	int fd = open("/dev/console", O_NOCTTY);
 	int stat = ioctl(fd, PIO_CMAP, &new_colors);
