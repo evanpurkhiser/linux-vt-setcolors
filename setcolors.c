@@ -17,6 +17,14 @@ int main(int argc, char *argv[])
 
 	ioctl(fd, GIO_CMAP, &test);
 
+
+	close(fd);
+
+	return 0;
+}
+
+void print_colors(unsigned char colors[])
+{
 	unsigned char red;
 	unsigned char green;
 	unsigned char blue;
@@ -24,14 +32,10 @@ int main(int argc, char *argv[])
 	int i, k;
 	for (i = k = 0; i < 16; ++i)
 	{
-		red   = test.colors[k++];
-		green = test.colors[k++];
-		blue  = test.colors[k++];
+		red   = colors[k++];
+		green = colors[k++];
+		blue  = colors[k++];
 
-		printf("%d is #%02X%02X%02X\n", i, red, green, blue);
+		printf("%02d is #%02X%02X%02X\n", i, red, green, blue);
 	}
-
-	close(fd);
-
-	return 0;
 }
