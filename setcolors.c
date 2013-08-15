@@ -40,24 +40,6 @@ get_palette_from_hex_set(const char *colors[])
 	return palette;
 }
 
-static void
-print_colors(unsigned char colors[])
-{
-	unsigned char red;
-	unsigned char green;
-	unsigned char blue;
-
-	int i, k;
-	for (i = k = 0; i < NUM_COLORS; ++i)
-	{
-		red   = colors[k++];
-		green = colors[k++];
-		blue  = colors[k++];
-
-		printf("%02d is #%02X%02X%02X\n", i, red, green, blue);
-	}
-}
-
 int main(int argc, char *argv[])
 {
 	struct palette new_colors = get_palette_from_hex_set(default_palette);
