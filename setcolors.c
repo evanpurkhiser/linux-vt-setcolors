@@ -7,8 +7,7 @@
 #include <fcntl.h>
 #include <linux/kd.h>
 
-/* Struct to contain the colors */
-struct colors { unsigned char values[48]; };
+struct palette { unsigned char colors[48]; };
 
 void print_colors(unsigned char colors[])
 {
