@@ -7,7 +7,9 @@
 #include <fcntl.h>
 #include <linux/kd.h>
 
-struct palette { unsigned char colors[48]; };
+#define NUM_COLORS 16
+
+struct palette { unsigned char colors[NUM_COLORS * 16]; };
 
 /**
  * Convert a list of colors in hex format to their actual hex formats suitable
@@ -20,7 +22,7 @@ get_palette_from_hex_set(const char *colors[])
 	unsigned int red, green, blue;
 	int i, k;
 
-	for (i = k = 0; i < 16; ++i)
+	for (i = k = 0; i < NUM_COLORS; ++i)
 	{
 		sscanf(colors[i], "%2x%2x%2x", &red, &green, &blue);
 
@@ -40,7 +42,7 @@ void print_colors(unsigned char colors[])
 	unsigned char blue;
 
 	int i, k;
-	for (i = k = 0; i < 16; ++i)
+	for (i = k = 0; i < NUM_COLORS; ++i)
 	{
 		red   = colors[k++];
 		green = colors[k++];
