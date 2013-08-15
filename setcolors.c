@@ -7,21 +7,8 @@
 #include <fcntl.h>
 #include <linux/kd.h>
 
-
-int main(int argc, char *argv[])
-{
-	int fd = open("/dev/console", O_RDWR);
-	
-	struct colors { unsigned char colors[48]; };
-	struct colors test;
-
-	ioctl(fd, GIO_CMAP, &test);
-
-
-	close(fd);
-
-	return 0;
-}
+/* Struct to contain the colors */
+struct colors { unsigned char values[48]; };
 
 void print_colors(unsigned char colors[])
 {
@@ -38,4 +25,29 @@ void print_colors(unsigned char colors[])
 
 		printf("%02d is #%02X%02X%02X\n", i, red, green, blue);
 	}
+}
+
+int main(int argc, char *argv[])
+{
+	const char *colors = "000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
+
+	struct colors new_colors;
+
+	unsigned char *dst = new_colors.values;
+	unsigned char *end = new_colors.values + sizeof(new_colors.values);
+	unsigned int u;
+
+	while (dst < end && sscanf(colors, "%2x", &u) == 1)
+	{
+		*dst++ = u;
+		colors += 2;
+	}
+
+	int fd = open("/dev/console", O_NOCTTY);
+	int stat = ioctl(fd, PIO_CMAP, &new_colors);
+	close(fd);
+
+	printf("status: %d == %d == %d\n", stat, errno, EFAULT);
+
+	return 0;
 }
