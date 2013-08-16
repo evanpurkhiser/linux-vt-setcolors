@@ -9,7 +9,17 @@
 
 #define NUM_COLORS 16
 
-static const char *default_palette[16] = {
+static const char *console_paths[] = {
+	"/proc/self/fd/0",
+	"/dev/tty",
+	"/dev/tty0",
+	"/dev/vc/0",
+	"/dev/systty",
+	"/dev/console",
+	NULL
+};
+
+static const char *default_palette[] = {
 "000000","aa0000","00aa00","aa5500","0000aa",
 "aa00aa","00aaaa","aaaaaa","555555","ff5555",
 "55ff55","ffff55","5555ff","ff55ff","55ffff","ffffff" };
@@ -39,6 +49,37 @@ get_palette_from_hex_set(const char *colors[])
 
 	return palette;
 }
+
+/**
+ * Get a file descriptor for a console to write to
+ */
+static int
+get_console_fd(const char *console_path)
+{
+	int i, fd;
+
+	// Use one of the default console paths
+	if ( ! console_path)
+	{
+		for (i = 0; console_paths[i]; ++i)
+		{
+			if ((fd = get_console_fd(console_paths[i])) > 0)
+				return fd;
+		}
+
+		return -1;
+	}
+
+	// Attempt to open the FD, and make sure it's a tty
+	if ((fd = open(console_path, O_RDWR | O_NOCTTY)) < 0)
+	{
+		perror("Unable to open console");
+		return -1;
+	}
+
+	return fd;
+}
+
 
 int main(int argc, char *argv[])
 {
