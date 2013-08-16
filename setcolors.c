@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include <errno.h>
 #include <sys/types.h>
@@ -81,6 +83,39 @@ get_console_fd(const char *console_path)
 	return fd;
 }
 
+/**
+ * Read color strings in from a file terminated by new lines
+ */
+static int
+get_color_set_from_file(const char *file_path, char color_set[][6])
+{
+	int i;
+	FILE *fd;
+	char *line, *color = NULL;
+	size_t read;
+
+	if ((fd = fopen(file_path, "r")) < 0)
+		return -1;
+
+	for (i = 0; getline(&line, &read, fd) > 0; ++i)
+	{
+		// Don't read more colors than we can fit in our color set
+		if ( ! color_set[i])
+			break;
+
+		color = line;
+
+		// Drop the hex from the color code
+		if (color[0] == '#')
+			++color;
+
+		strncpy(color_set[i], color, 6);
+	}
+
+	free(line);
+	fclose(fd);
+	return 0;
+}
 
 int main(int argc, char *argv[])
 {
