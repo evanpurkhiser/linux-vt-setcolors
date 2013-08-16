@@ -76,10 +76,7 @@ get_console_fd(const char *console_path)
 
 	// Attempt to open the FD, and make sure it's a tty
 	if ((fd = open(console_path, O_RDWR | O_NOCTTY)) < 0)
-	{
-		perror("Unable to open console");
 		return -1;
-	}
 
 	return fd;
 }
