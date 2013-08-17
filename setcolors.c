@@ -153,7 +153,8 @@ get_color_set_from_file(const char *file_path, char color_set[][7])
 	return 0;
 }
 
-int main(int argc, char *argv[])
+int
+main(int argc, char *argv[])
 {
 	// Default the color set to the default colors if none specified
 	char color_set[PALETTE_SIZE][7];
