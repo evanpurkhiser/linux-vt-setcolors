@@ -1,0 +1,32 @@
+.TH setcolors 1  "August 17, 2013" "Version 1.0" "User Commands"
+.SH NAME
+setcolors \- Updates the linux VT101 console default color palette
+.SH SYNOPSIS
+\fBsetcolors\fR [-c device] [config-file]
+.SH DESCRIPTION
+The \fBsetcolor\fR command is used to change the color palette of the linux
+VT101 console. When run the colors will be applied to the terminal device and
+the screen will be cleared.
+
+If no configuration file is given then the color palette will be reset to the
+default colors used in the linux VT. 
+.SH OPTIONS
+.IP "\fB\-h\fR, \fB--help\fR"
+Print a usage message briefly summarizing these command-line options
+then exit.
+.IP "\fB\-c\fR, \fB--console\fR \fIdevice path\fR"
+Specify the console device to make the ioctl call to. This should be a VT101
+linux terminal device file. Usually /dev/tty. Without specifying this option
+various device files will be tried.
+.SH COLOR CONFIGURATION FILE
+setcolors accepts a file containing a list of hexadecimal color values separated
+by new lines. There should be no more than 16 colors listed in the configuration
+file. You can specify the color ID by prepending the color with the color ID and
+the octothorp (#). Color ID's 0 through 15 are available. If no ID is specified
+the colors will be set in the order they are in the configuration file.
+.SH BUGS
+Bugs may be reported on the GitHub project page:
+
+https://github.com/EvanPurkhiser/linux-vt-setcolors
+.SH AUTHOR
+Evan M. Purkhiser (evanpurkhiser@gmail.com)
