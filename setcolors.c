@@ -106,10 +106,16 @@ get_color_set_from_file(const char *file_path, char color_set[][7])
 
 		color = line;
 
-		// Drop the hex from the color code
 		if (color[0] == '#')
 			++color;
 
+		if (strlen(color) < 7)
+		{
+			fprintf(stderr, "Color %d: value too short, skipping\n", i + 1);
+			continue;
+		}
+
+		// color_set will already have null terminating characters at index 7
 		strncpy(color_set[i], color, 6);
 	}
 
