@@ -47,7 +47,7 @@ get_palette_from_color_set(const char colors[][7])
 	{
 		if (sscanf(colors[i], "%2x%2x%2x", &red, &green, &blue) != 3)
 		{
-			fprintf(stderr, "Color %d: Invalid hex code\n", i + 1);
+			fprintf(stderr, "Color %d: Invalid hex code\n", i);
 			exit(1);
 		}
 
@@ -113,7 +113,7 @@ get_color_set_from_file(const char *file_path, char color_set[][7])
 
 		if (strlen(color) < 7)
 		{
-			fprintf(stderr, "Color %d: value too short, skipping\n", i + 1);
+			fprintf(stderr, "Color %d: value too short, skipping\n", i);
 			continue;
 		}
 
