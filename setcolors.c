@@ -16,9 +16,9 @@
 "Usage: setcolors [-c device] [config-file]\n"\
 "Updates the linux VT101 console default color palette\n"\
 "\n"\
-"The color configuration file passed should contain at most 16 hexidecimal\n"\
+"The color configuration file passed should contain at most 16 hexadecimal\n"\
 "values separated by new lines. You can specify the color ID by prefixing\n"\
-"the hexidecimal value with the color Id (between 0 and 15) and a `#'\n"\
+"the hexadecimal value with the color Id (between 0 and 15) and a `#'\n"\
 "\n"\
 "If no color config file is passed the colors will be reset to the defaults\n"\
 "\n"\
@@ -42,7 +42,7 @@ static const char default_color_set[PALETTE_SIZE][7] = {
 	"5555ff","ff55ff","55ffff","ffffff" };
 
 /**
- * The palette struct is the type epxected by ioctl PIO_CMAP
+ * The palette struct is the type expected by ioctl PIO_CMAP
  */
 struct palette { unsigned char colors[PALETTE_SIZE * 7]; };
 
