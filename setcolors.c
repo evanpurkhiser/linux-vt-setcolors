@@ -18,7 +18,7 @@
 "\n"\
 "The color configuration file passed should contain at most 16 hexidecimal\n"\
 "values separated by new lines. You can specify the color ID by prefixing\n"\
-"the hexidecimal value with the color Id (between 0 and 16) and a `#'\n"\
+"the hexidecimal value with the color Id (between 0 and 15) and a `#'\n"\
 "\n"\
 "If no color config file is passed the colors will be reset to the defaults\n"\
 "\n"\
