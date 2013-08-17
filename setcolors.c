@@ -155,7 +155,13 @@ int main(int argc, char *argv[])
 	}
 
 	struct palette new_palette = get_palette_from_color_set((const char (*)[]) color_set);
-	int fd = get_console_fd(console_path);
+	int fd;
+
+	if ((fd = get_console_fd(console_path)) < 0)
+	{
+		perror("Unable to open console");
+		exit(1);
+	}
 
 	if (ioctl(fd, PIO_CMAP, &new_palette) < 0)
 	{
