@@ -119,7 +119,9 @@ get_color_set_from_file(const char *file_path, char color_set[][7])
 		strncpy(color_set[i], color, 6);
 	}
 
-	free(line);
+	if (line)
+		free(line);
+
 	fclose(fd);
 	return 0;
 }
