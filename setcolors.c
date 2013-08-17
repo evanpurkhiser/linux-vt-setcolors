@@ -126,6 +126,9 @@ get_color_set_from_file(const char *file_path, char color_set[][7])
 		strncpy(color_set[i], color, 6);
 	}
 
+	if (i < 16)
+		fprintf(stderr, "Warning: Less than 16 colors in configuration\n");
+
 	if (line)
 		free(line);
 
