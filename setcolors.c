@@ -45,9 +45,11 @@ get_palette_from_color_set(const char colors[][7])
 
 	for (i = k = 0; i < PALETTE_SIZE; ++i)
 	{
-
 		if (sscanf(colors[i], "%2x%2x%2x", &red, &green, &blue) != 3)
-			perror("Malformed hex color code");
+		{
+			fprintf(stderr, "Color %d: Invalid hex code\n", i + 1);
+			exit(1);
+		}
 
 		palette.colors[k++] = red;
 		palette.colors[k++] = green;
