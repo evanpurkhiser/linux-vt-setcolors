@@ -9,7 +9,7 @@
 #include <fcntl.h>
 #include <linux/kd.h>
 
-#define NUM_COLORS 16
+#define PALETTE_SIZE 16
 
 static const char *console_paths[] = {
 	"/proc/self/fd/0",
@@ -21,7 +21,7 @@ static const char *console_paths[] = {
 	NULL
 };
 
-static const char default_color_set[NUM_COLORS][6] = {
+static const char default_color_set[PALETTE_SIZE][6] = {
 	"000000","aa0000","00aa00","aa5500",
 	"0000aa","aa00aa","00aaaa","aaaaaa",
 	"555555","ff5555","55ff55","ffff55",
@@ -30,7 +30,7 @@ static const char default_color_set[NUM_COLORS][6] = {
 /**
  * The palette struct is the type epxected by ioctl PIO_CMAP
  */
-struct palette { unsigned char colors[NUM_COLORS * 16]; };
+struct palette { unsigned char colors[PALETTE_SIZE * 16]; };
 
 /**
  * Convert a list of colors in hex format to their actual hex formats suitable
@@ -43,8 +43,9 @@ get_palette_from_color_set(const char colors[][6])
 	unsigned int red, green, blue;
 	int i, k;
 
-	for (i = k = 0; i < NUM_COLORS; ++i)
+	for (i = k = 0; i < PALETTE_SIZE; ++i)
 	{
+
 		if (sscanf(colors[i], "%2x%2x%2x", &red, &green, &blue) != 3)
 			perror("Malformed hex color code");
 
@@ -120,8 +121,8 @@ get_color_set_from_file(const char *file_path, char color_set[][6])
 int main(int argc, char *argv[])
 {
 	// Default the color set to the default colors if none specified
-	char color_set[NUM_COLORS][6];
-	memcpy(color_set, default_color_set, NUM_COLORS * 6);
+	char color_set[PALETTE_SIZE][6];
+	memcpy(color_set, default_color_set, PALETTE_SIZE * 6);
 
 	if (ioctl(fd, PIO_CMAP, &new_colors) < 0)
 		perror("Failed to set new color map on console");
