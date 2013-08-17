@@ -134,8 +134,26 @@ int main(int argc, char *argv[])
 	char color_set[PALETTE_SIZE][7];
 	memcpy(color_set, default_color_set, PALETTE_SIZE * 7);
 
-	if (ioctl(fd, PIO_CMAP, &new_colors) < 0)
+	// By default let the console path be detected
+	char *console_path = NULL;
+
+	if (get_color_set_from_file("/home/evan/test.txt", color_set) < 0)
+	{
+		perror("Unable to open colors file");
+		exit(1);
+	}
+
+	struct palette new_palette = get_palette_from_color_set((const char (*)[]) color_set);
+	int fd = get_console_fd(console_path);
+
+	if (ioctl(fd, PIO_CMAP, &new_palette) < 0)
+	{
 		perror("Failed to set new color map on console");
+		exit(1);
+	}
+
+	// Clear console to fix color artifacts
+	write(fd, "\033[2J\033[1;1H", 10);
 
 	close(fd);
 	return 0;
