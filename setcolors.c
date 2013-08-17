@@ -66,6 +66,7 @@ static int
 get_console_fd(const char *console_path)
 {
 	int i, fd;
+	char type = NULL;
 
 	// Use one of the default console paths
 	if ( ! console_path)
@@ -81,6 +82,10 @@ get_console_fd(const char *console_path)
 
 	// Attempt to open the FD, and make sure it's a tty
 	if ((fd = open(console_path, O_RDWR | O_NOCTTY)) < 0)
+		return -1;
+
+	// Make sure the tty is a linux VT101 terminal
+	if ( ! isatty(fd) || ioctl(fd, KDGKBTYPE, &type) < 0 || type != KB_101)
 		return -1;
 
 	return fd;
