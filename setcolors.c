@@ -165,33 +165,31 @@ main(int argc, char *argv[])
 
 	struct option options[] =
 	{
-		{"file",     required_argument, 0, 'f'},
 		{"console",  required_argument, 0, 'c'},
 		{"help",     no_argument,       0, 'h'},
 		{0, 0, 0, 0}
 	};
 
 	char c;
-
-	while((c = getopt_long(argc, argv, "f:c:h", options, NULL)) != -1)
+	while((c = getopt_long(argc, argv, "-c:h", options, NULL)) != -1)
 	{
 		switch(c)
 		{
-			case 'f':
-				if (get_color_set_from_file(optarg, color_set) < 0)
-				{
-					perror("Unable to load color set from file");
-					exit(1);
-				}
-				break;
 			case 'c':
 				console_path = optarg;
 				break;
 			case 'h':
 				printf("%s\n", HELP);
 				return 0;
+			case '\1':
+				if (get_color_set_from_file(optarg, color_set) < 0)
+				{
+					perror("Unable to load color set from file");
+					exit(1);
+				}
+				break;
 			default:
-				abort();
+				exit(1);
 		}
 	}
 
