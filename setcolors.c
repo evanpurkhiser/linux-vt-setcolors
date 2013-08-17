@@ -3,6 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
+#include <getopt.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/ioctl.h>
@@ -148,10 +149,36 @@ int main(int argc, char *argv[])
 	// By default let the console path be detected
 	char *console_path = NULL;
 
-	if (get_color_set_from_file("/home/evan/test.txt", color_set) < 0)
+	struct option options[] =
 	{
-		perror("Unable to open colors file");
-		exit(1);
+		{"file",     required_argument, 0, 'f'},
+		{"console",  required_argument, 0, 'c'},
+		{"help",     no_argument,       0, 'h'},
+		{0, 0, 0, 0}
+	};
+
+	char c;
+
+	while((c = getopt_long(argc, argv, "f:c:h", options, NULL)) != -1)
+	{
+		switch(c)
+		{
+			case 'f':
+				if (get_color_set_from_file(optarg, color_set) < 0)
+				{
+					perror("Unable to load color set from file");
+					exit(1);
+				}
+				break;
+			case 'c':
+				console_path = optarg;
+				break;
+			case 'h':
+				printf("%s\n", HELP);
+				return 0;
+			default:
+				abort();
+		}
 	}
 
 	struct palette new_palette = get_palette_from_color_set((const char (*)[]) color_set);
