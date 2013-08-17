@@ -116,7 +116,7 @@ get_color_set_from_file(const char *file_path, char color_set[][7])
 	char *line, *color = NULL;
 	size_t read;
 
-	if ((fd = fopen(file_path, "r")) < 0)
+	if ((fd = fopen(file_path, "r")) == NULL)
 		return -1;
 
 	for (i = 0; getline(&line, &read, fd) > 0; ++i)
