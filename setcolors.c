@@ -21,7 +21,7 @@ static const char *console_paths[] = {
 	NULL
 };
 
-static const char default_color_set[PALETTE_SIZE][6] = {
+static const char default_color_set[PALETTE_SIZE][7] = {
 	"000000","aa0000","00aa00","aa5500",
 	"0000aa","aa00aa","00aaaa","aaaaaa",
 	"555555","ff5555","55ff55","ffff55",
@@ -30,14 +30,14 @@ static const char default_color_set[PALETTE_SIZE][6] = {
 /**
  * The palette struct is the type epxected by ioctl PIO_CMAP
  */
-struct palette { unsigned char colors[PALETTE_SIZE * 16]; };
+struct palette { unsigned char colors[PALETTE_SIZE * 7]; };
 
 /**
  * Convert a list of colors in hex format to their actual hex formats suitable
  * for passing to the ioctl function
  */
 static struct palette
-get_palette_from_color_set(const char colors[][6])
+get_palette_from_color_set(const char colors[][7])
 {
 	struct palette palette;
 	unsigned int red, green, blue;
@@ -88,7 +88,7 @@ get_console_fd(const char *console_path)
  * Read color strings in from a file terminated by new lines
  */
 static int
-get_color_set_from_file(const char *file_path, char color_set[][6])
+get_color_set_from_file(const char *file_path, char color_set[][7])
 {
 	int i;
 	FILE *fd;
@@ -121,8 +121,8 @@ get_color_set_from_file(const char *file_path, char color_set[][6])
 int main(int argc, char *argv[])
 {
 	// Default the color set to the default colors if none specified
-	char color_set[PALETTE_SIZE][6];
-	memcpy(color_set, default_color_set, PALETTE_SIZE * 6);
+	char color_set[PALETTE_SIZE][7];
+	memcpy(color_set, default_color_set, PALETTE_SIZE * 7);
 
 	if (ioctl(fd, PIO_CMAP, &new_colors) < 0)
 		perror("Failed to set new color map on console");
