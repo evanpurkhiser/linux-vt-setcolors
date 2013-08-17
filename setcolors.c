@@ -133,7 +133,7 @@ get_color_set_from_file(const char *file_path, char color_set[][7])
 		// Use the color ID specified if possible
 		sscanf(color, "%d#%s", &i, color);
 
-		if (strlen(color) < 7)
+		if (strlen(color) < 6)
 		{
 			fprintf(stderr, "Color %d: value too short, skipping\n", i);
 			continue;
