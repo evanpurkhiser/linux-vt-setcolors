@@ -127,10 +127,6 @@ get_color_set_from_file(const char *file_path, char color_set[][7])
 
 		color = line;
 
-		// Skip blank lines
-		if (color[0] == '\n')
-			--i; continue;
-
 		if (color[0] == '#')
 			++color;
 
