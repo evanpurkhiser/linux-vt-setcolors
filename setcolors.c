@@ -77,7 +77,7 @@ static int
 get_console_fd(const char *console_path)
 {
 	int i, fd;
-	char type = NULL;
+	char type = '\0';
 
 	// Use one of the default console paths
 	if ( ! console_path)
@@ -110,8 +110,8 @@ get_color_set_from_file(const char *file_path, char color_set[][7])
 {
 	int i;
 	FILE *fd;
-	char *line, *color = NULL;
-	size_t read;
+	char *line = NULL, *color = NULL;
+	size_t read = 0;
 
 	if ((fd = fopen(file_path, "r")) == NULL)
 		return -1;
