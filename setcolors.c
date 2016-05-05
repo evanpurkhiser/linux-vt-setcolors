@@ -177,7 +177,7 @@ main(int argc, char *argv[])
 		{0, 0, 0, 0}
 	};
 
-	char c;
+	int c;
 	while((c = getopt_long(argc, argv, "-c:h", options, NULL)) != -1)
 	{
 		switch(c)
