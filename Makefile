@@ -1,7 +1,9 @@
 PREFIX=/usr/local
+CC=gcc
+CFLAGS=-Wall
 
 setcolors: setcolors.c
-	gcc -Wall setcolors.c -o setcolors
+	$(CC) $(CFLAGS) setcolors.c -o setcolors
 
 install: setcolors setcolors.1
 	install -Dm 755 setcolors "${DESTDIR}${PREFIX}/bin/setcolors"
